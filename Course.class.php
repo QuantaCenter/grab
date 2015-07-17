@@ -6,6 +6,10 @@ class Course {
 	private $content;
 
 	public function __construct($username){
+		$dir = dirname(__FILE__).'/cookies';
+		if(!is_dir($dir)){
+			mkdir($dir);
+		}
 		$this->cookie = dirname(__FILE__).'/cookies/'.$username.'.txt';
 	}
 
