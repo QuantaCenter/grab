@@ -45,17 +45,29 @@ form{
 #btn-grab,#btn-stop{
 	display: none;
 }
+.grabsuccess
+{
+	display: inline-block;
+	background-color: green;
+	color: #FFF;
+}
+.grabfail
+{
+	display: inline-block;
+	background-color: red;
+	color: #FFF;
+}
 </style>
 </head>
 <body>
 <form id="form-login" action="" method="post">
 	<p>
 		<label>username:</label>
-		<input id="username" type="text" name="username">	
+		<input id="username" type="text" name="username">
 	</p>
 	<p>
 		<label>password:</label>
-		<input id="password" type="password" name="password">	
+		<input id="password" type="password" name="password">
 	</p>
 	<p>
 		<a class="btn-submit" href="javascript:void(0)">click to submit</a>
@@ -74,7 +86,7 @@ form{
 	<table id="course-my"></table>
 </form>
 <div id="info">
-	
+
 </div>
 <script type="text/javascript" src="zepto.min.js"></script>
 <script type="text/javascript" src="index.js"></script>

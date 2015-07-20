@@ -29,7 +29,7 @@ class Course {
 	 * @param String $url
 	 * @param Array $field
 	 */
-	public function login($url,$field){	
+	public function login($url,$field){
 		$param = '';
 		foreach ($field as $key => $value){
 			$param .= $key."=".urlencode($value)."&";
@@ -38,7 +38,7 @@ class Course {
 		$host = $this->parseHost($url);
 		$origin = 'http://'.$host;
 		$this->username = $field['username'];
-		
+
 		$header = array(
 			'POST /pkmslogin.form HTTP/1.1',
 			'Host: '.$host,
@@ -53,7 +53,7 @@ class Course {
 			'Accept-Language: zh-CN,zh;q=0.8',
 			'Accept-Charset: GBK,utf-8;q=0.7,*;q=0.3'
 		);
-		
+
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
@@ -64,9 +64,9 @@ class Course {
 		curl_setopt($ch, CURLOPT_COOKIEJAR, $this->cookie);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-		
+
 		$content = curl_exec($ch);
-		
+
 		curl_close($ch);
 
 		$pattern = "/Your login was successful========./";
@@ -87,12 +87,12 @@ class Course {
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie);
-	
+
 		ob_start();
 		curl_exec($ch);
 		$content = ob_get_contents();
 		ob_end_clean();
-		
+
 		curl_close($ch);
 
 		$pattern = "/<span id=\"xhxm\">\d*(.*)<\/span>/";
@@ -125,12 +125,12 @@ class Course {
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie);
-	
+
 		ob_start();
 		curl_exec($ch);
 		$content = ob_get_contents();
 		ob_end_clean();
-		
+
 		curl_close($ch);
 
 		$content = str_replace(array("\r","\n"), "", $content);
@@ -174,8 +174,8 @@ class Course {
 		$param = substr($param, 0,-1);
 		$host = $this->parseHost($url);
 		$origin = 'http://'.$host;
-		$post = split("/",$url);
-		
+		$post = explode("/",$url);
+
 		$header = array(
 			'POST /'.$post[count($post)-1].' HTTP/1.1',
 			'Host: '.$host,
@@ -190,9 +190,9 @@ class Course {
 			'Accept-Encoding: gzip,deflate,sdch',
 			'Accept-Language: zh-CN,zh;q=0.8',
 			'Accept-Charset: GBK,utf-8;q=0.7,*;q=0.3',
-			
+
 		);
-		
+
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		// curl_setopt($ch, CURLOPT_HEADER, true);
@@ -200,16 +200,16 @@ class Course {
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
-		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie); 
+		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie);
 		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		// curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-		
+
 		// 抓取URL并把它传递给浏览器
 		ob_start();
 		curl_exec($ch);
 		$content = ob_get_contents();
 		ob_end_clean();
-		
+
 		curl_close($ch);
 
 		$content = str_replace(array("\r","\n"), "", $content);

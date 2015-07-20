@@ -35,9 +35,10 @@ function choose(){//查看课程列表
 function grab(){//提交表单
 	$grab = new Course($_POST['username']);
 	$url = "http://jw.gdufs.edu.cn/".$_POST['type']."&xh=".$_POST['username']."&xm=".urlencode($_POST['name']);
-	$course = split(",", $_POST['course']);
+	$course = explode(",", $_POST['course']);
 	$input = $_POST['input'];
-	$arr = split("=>|&", $input);
+	$tempReg = "/=>|&/";
+	$arr = preg_split($tempReg, $input);
 	$from = array();
 	for($i=0;$i<count($arr);$i+=2){
 		$form[$arr[$i]] = $arr[$i+1];

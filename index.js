@@ -65,7 +65,7 @@ $(function(){
 					course = course.substr(0,course.length-1);
 					self.timer = setInterval(function(){
 						self.grab(self.count++,course);
-					},200);
+					},1000);
 				}
 				else{
 					var tips = $("<p>please choose a class</p>");
@@ -182,6 +182,9 @@ $(function(){
 			var tips = $("<p id='grab-"+id+"'>grabing("+id+")...</p>");
 			$("#info")[0].scrollTop = $("#info")[0].scrollHeight;
 			$("#info").append(tips);
+			$courseNameSelector = "input[name='" + course + "']";
+			$courseName = $($courseNameSelector).parent().next().text();
+			console.log($courseName);
 			$.ajax({
 				url:'grab.php?action=grab',
 				type:'post',
@@ -194,8 +197,15 @@ $(function(){
 					'course':course
 				},
 				success:function(data){
+					var flag = '';
 					$("#course-my").html(data.my);
-					$("#grab-"+id).html("grabing("+id+") success");
+					if (data.my.indexOf($courseName) > 0) {
+						flag = "<span class='grabsuccess' > have grab the course:" + $courseName + "!</span>";
+					} else {
+						flag = "<span class='grabfail' > did not grab the course:"+ $courseName + "!</span>";
+					}
+					$("#grab-"+id).html("grabing("+id+") success. result: " + flag);
+
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown){
 					$("#grab-"+id).html("grabing("+id+") error");
