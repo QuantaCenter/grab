@@ -193,6 +193,7 @@ $(function(){
 					'course':course
 				},
 				success:function(data){
+					$("#info")[0].scrollTop = $("#info")[0].scrollHeight;
 					$("#course-my").html(data.my);
 					$("#grab-"+id).html("grabing("+id+") success");
 				},
