@@ -65,7 +65,7 @@ $(function(){
 					course = course.substr(0,course.length-1);
 					self.timer = setInterval(function(){
 						self.grab(self.count++,course);
-					},1000);
+					},200);
 				}
 				else{
 					var tips = $("<p>please choose a class</p>");
@@ -180,6 +180,7 @@ $(function(){
 		grab:function(id, course){
 			var self = this;
 			var tips = $("<p id='grab-"+id+"'>grabing("+id+")...</p>");
+			$("#info")[0].scrollTop = $("#info")[0].scrollHeight;
 			$("#info").append(tips);
 			$.ajax({
 				url:'grab.php?action=grab',
@@ -193,7 +194,6 @@ $(function(){
 					'course':course
 				},
 				success:function(data){
-					$("#info")[0].scrollTop = $("#info")[0].scrollHeight;
 					$("#course-my").html(data.my);
 					$("#grab-"+id).html("grabing("+id+") success");
 				},
