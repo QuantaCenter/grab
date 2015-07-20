@@ -46,10 +46,12 @@ function grab(){//提交表单
 	$form['ddl_kcgs'] = "";//课程归属
 	$form['ddl_sksj'] = "";//上课时间
 	$form['ddl_xqbs'] = 2;//1:北校区,2:南校区
+	$form['Button1'] = "提交";
 	for($i=0;$i<count($course);$i++){
 		$form[$course[$i]] = "on";
 	}
-	echo json_encode($grab->submitForm($url,$form));
+	$res = my_iconv($grab->submitForm($url,$form));
+	echo json_encode($res);
 }
 function my_iconv($data){
 	foreach ($data as $key=>$value) {

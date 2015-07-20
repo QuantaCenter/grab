@@ -193,25 +193,36 @@ class Course {
 			
 		);
 		
-// 		var_dump($header);
-		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, true);
+		// curl_setopt($ch, CURLOPT_HEADER, true);
+		curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
 		curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie); 
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		// curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 		
 		// 抓取URL并把它传递给浏览器
-		$content = curl_exec($ch);
+		ob_start();
+		curl_exec($ch);
+		$content = ob_get_contents();
+		ob_end_clean();
 		
 		curl_close($ch);
 
-		// var_dump($content);
-		return $content;
+		$content = str_replace(array("\r","\n"), "", $content);
+		$pattern = "/<table.*?>(.*?)<\/table>/";
+		if(preg_match_all($pattern, $content, $match)){
+			$res = array();
+			$res['my'] = preg_replace("/<a.*?>/", "", $match[0][1]);
+			$res['my'] = str_replace("submit", "button", $res['my']);
+			return $res;
+		}
+		else{
+			return 0;
+		}
 	}
 }
 ?>

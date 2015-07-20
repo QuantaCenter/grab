@@ -47,8 +47,6 @@ $(function(){
 				var type = $(this).attr("data-code");
 				$("#info").empty();
 				self.count = 0;
-				$("#form-type .nav a").removeClass("btn-on");
-				$(this).addClass("btn-on");
 				self.chooseType(type);
 			});
 			$("#btn-grab").on("click",function(){
@@ -195,6 +193,7 @@ $(function(){
 					'course':course
 				},
 				success:function(data){
+					$("#course-my").html(data.my);
 					$("#grab-"+id).html("grabing("+id+") success");
 				},
 				error:function(XMLHttpRequest, textStatus, errorThrown){
