@@ -22,7 +22,7 @@ $(function(){
 				var flag = false;
 				var course = "";
 				for(var i=0;i<checkbox.length;i++){
-					if(checkbox.eq(i).attr("checked")){
+					if(checkbox.eq(i).is(":checked")){
 						flag = true;
 						course += checkbox.eq(i).attr("value")+",";
 					}
@@ -71,13 +71,13 @@ $(function(){
 							$("#grab-"+id).append("<p>成功</p>");
 							$.ajax({
 								"url":'grab.php?action=myCourse',
-								dataType:'string',
+								dataType:'json',
 								type:'post',
 								data:{
 									'username':self.username
 								},
 								success: function (data) {
-									$("#course-my").html(data);
+									$("#course-my").html(data.course);
 								}
 							});
 						}
@@ -92,36 +92,36 @@ $(function(){
 				}
 			})
 		},
-		del: function (id) {
-			$.ajax({
-				url:'grab.php?del',
-				type:'post',
-				dataType:'json',
-				data:{
-					'username':self.username,
-					'course':id
-				},
-				success: function (data) {
-					if(data.success){
-						alert("删除成功");
-						$.ajax({
-							"url":'grab.php?action=myCourse',
-							dataType:'string',
-							type:'post',
-							data:{
-								'username':self.username
-							},
-							success: function (data) {
-								$("#course-my").html(data);
-							}
-						});
-					}
-					else{
-						alert("删除失败");
-					}
-				}
-			});
-		}
+		//del: function (id) {
+		//	$.ajax({
+		//		url:'grab.php?del',
+		//		type:'post',
+		//		dataType:'json',
+		//		data:{
+		//			'username':self.username,
+		//			'course':id
+		//		},
+		//		success: function (data) {
+		//			if(data.success){
+		//				alert("删除成功");
+		//				$.ajax({
+		//					"url":'grab.php?action=myCourse',
+		//					dataType:'string',
+		//					type:'post',
+		//					data:{
+		//						'username':self.username
+		//					},
+		//					success: function (data) {
+		//						$("#course-my").html(data);
+		//					}
+		//				});
+		//			}
+		//			else{
+		//				alert("删除失败");
+		//			}
+		//		}
+		//	});
+		//}
 	}
 	index.init();
 });
@@ -142,12 +142,12 @@ function xstkOper(id){
 					$.ajax({
 						"url":'grab.php?action=myCourse',
 						type:'post',
-						dataType:'string',
+						dataType:'json',
 						data:{
 							'username':$("#user").attr('data-uid')
 						},
 						success: function (data) {
-							$("#course-my").html(data);
+							$("#course-my").html(data.course);
 						}
 					});
 				}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>ps抢课</title>
+</head>
+<body>
+<div id="user">
+    <form action="#">
+        <label for="username">账号：</label><input type="text" name="username" id="username"><br/>
+        <label for="pw">密码：</label><input type="password" name="pw" id="pw"><br/>
+        <input type="submit" value="登录">
+    </form>
+</div>
+<div id="info">
+
+</div>
+<script type="text/javascript" src="js/zepto.min.js"></script>
+<script type="application/javascript">
+    $(function () {
+        var ps={
+            username:null,
+            timer:null,
+            init: function () {
+                this.bindEvent();
+            },
+            login: function (username, pw) {
+                var self=this;
+                $.ajax({
+                    url:"grab.php?action=login",
+                    data:{
+                        username:username,
+                        password:pw
+                    },
+                    type:"post",
+                    dataType:'json',
+                    success: function (data) {
+                        if(data){
+                            self.username=username;
+                            $("#user").text(data.name);
+                            self.into();
+                        }
+                        else{
+                            alert("登陆失败");
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            },
+            bindEvent: function () {
+                var self=this;
+                $("input[type='submit']").on('click',function () {
+                    var u=$("#username").val();
+                    var p=$("#pw").val();
+                    if($.trim(u) && $.trim(p)){
+                        self.login(u,p);
+                    }
+                    else{
+                        alert("有空");
+                    }
+                    return false;
+                });
+            },
+            into: function () {
+                var self=this;
+                $.ajax({
+                    'url':'photoshop.php?action=into',
+                    'type':'post',
+                    'data':{
+                        username:self.username
+                    },
+                    'success': function (data) {
+                        console.log(data);
+                        self.timer=setInterval(function () {
+                            self.curl();
+                        },100);
+                    }
+                });
+            },
+            curl: function () {
+                var self=this;
+                $.ajax({
+                    'url':'photoshop.php?action=curl',
+                    'type':'post',
+                    dataType:'json',
+                    'data':{
+                            username:self.username
+                            },
+                    success: function (data) {
+                        console.log(data);
+                        if(data.success){
+                            $("#info").append("<p>成功</p>");
+                            clearInterval(self.timer);
+                        }
+                        else{
+                            $("#info").append("<p>"+data.message+"</p>");
+                        }
+                    }
+                });
+            }
+        };
+        ps.init();
+    });
+</script>
+</body>
+</html>

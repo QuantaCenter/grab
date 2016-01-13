@@ -97,11 +97,11 @@ html,body {
 <div class="box">
 		<div class="login-box">
 			<div class="login-title text-center">
-				<h1><small>抢课系统院系选修版--登录</small></h1>
+				<h1><small>抢课系统--登录</small></h1>
 			</div>
 			<div class="login-content ">
 			<div class="form">
-			<form action="login.php" method="post">
+			<form action="login.php" method="post" id="form">
 				<div class="form-group">
 					<div class="col-xs-12  ">
 						<div class="input-group">
@@ -119,8 +119,12 @@ html,body {
 					</div>
 				</div>
 				<div class="form-group form-actions">
-					<div class="col-xs-4 col-xs-offset-4 ">
-						<button type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span> 登录</button>
+					<input type="hidden" name="type" id="type"/>
+					<div class="col-xs-4 col-xs-offset-2">
+						<button id="btn1" type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span> 院系选修</button>
+					</div>
+					<div class="col-xs-4">
+						<button id="btn2"  type="submit" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-off"></span> 通选课</button>
 					</div>
 				</div>
 			</form>
@@ -128,7 +132,17 @@ html,body {
 		</div>
 	</div>
 </div>
-
+<script type="application/javascript">
+	var type=document.getElementById("type");
+	document.getElementById("btn1").onclick= function () {
+		type.value=1;
+		return true;
+	};
+	document.getElementById("btn2").onclick= function () {
+		type.value=2;
+		return true;
+	};
+</script>
 </body>
 
 </html>

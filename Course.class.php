@@ -97,20 +97,9 @@ class Course {
      */
     public function showCourse($url,$filed){
 
-
+        $this->intoCourse();
 
         $param = http_build_query($filed);
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'http://jxgl.gdufs.edu.cn/jsxsd/xsxk/xsxk_index?jx0502zbid=425DF1EBE9644E6297C4D54B3EAD7A93');
-        curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie);
-        curl_exec($ch);
-
-
-        curl_close($ch);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -120,13 +109,19 @@ class Course {
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         $content=curl_exec($ch);
         curl_close($ch);
-        $course_list=json_decode(trim($content,chr(239).chr(187).chr(191)),true);
-        if($course_list){
-            return $course_list;
-        }
-        else{
-            return false;
-        }
+        return $content;
+    }
+
+    function intoCourse(){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://jxgl.gdufs.edu.cn/jsxsd/xsxk/xsxk_index?jx0502zbid=425DF1EBE9644E6297C4D54B3EAD7A93');
+        curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie);
+        curl_exec($ch);
+
+        curl_close($ch);
     }
 
     /**

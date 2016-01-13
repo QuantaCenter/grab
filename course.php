@@ -23,8 +23,8 @@ $field = array(
     'mDataProp_6'=>'ctsm',//时间冲突
     'mDataProp_7'=>'czOper',//操作
 );
-$course_list=$grab->showCourse($url,$field);
-
+$content=$grab->showCourse($url,$field);
+$course_list=json_decode(trim($content,chr(239).chr(187).chr(191)),true);
 $url='http://jxgl.gdufs.edu.cn/jsxsd/xsxkjg/comeXkjglb';
 $myCourse=$grab->getMYCourse($url);
 
@@ -47,7 +47,7 @@ $myCourse=$grab->getMYCourse($url);
             overflow: auto;
          }
     </style>
-    <script type="text/javascript" src="js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
