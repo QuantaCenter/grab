@@ -68,6 +68,7 @@ if($grab->login($url,$field)){
         }
         $i++;
         if($i/1000>$j){
+        	$j++;
         	fclose($fp);
         	$fp=fopen($username."console.txt",'w+');
         }
