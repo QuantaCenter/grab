@@ -44,5 +44,5 @@ for item in ${cn[@]};do
     echo $item
     curl -b "./cookie_file/"$file_name".txt" "http://jxgl.gdufs.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id="$item
 done
-# python -c "import time;time.sleep(0.05)"; done  # 限速
+python -c "import time;time.sleep(0.05)"  # 限速
 done
