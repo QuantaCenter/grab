@@ -1,0 +1,15 @@
+#--------------Linux--------------
+*~
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+#---------------Pycharm------------
+.idea/
+
+#---------------temp log----------------
+cookie_file/*.txt
+course_json/*.txt
