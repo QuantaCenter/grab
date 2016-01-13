@@ -84,7 +84,7 @@ function showTX(){
 	$query['sfym']=urlencode($_GET['sfym']);//过滤已满
 	$query['sfct']=urlencode($_GET['sfct']);//过滤冲突
 	$query['szjylb']=urlencode($_GET['szjylb']);//类别
-	$query['szkclb']=urlencode($_GET['szkclb']);//老类别，没用了
+	$query['szkclb']=urlencode($_GET['szkclb']);//老类别，被隐藏了
 
 	$url="http://jxgl.gdufs.edu.cn/jsxsd/xsxkkc/xsxkGgxxkxk";
 	$url.="?".http_build_query($query);

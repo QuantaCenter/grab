@@ -5,6 +5,7 @@
  * Date: 2016/1/11
  * Time: 23:38
  */
+header("Content-type:text/html;charset=utf-8");
 include "Course.class.php";
 $username = $_POST['username'];
 $password = $_POST['password'];

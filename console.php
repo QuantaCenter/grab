@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Created by PhpStorm.
  * User: zjy
@@ -34,7 +34,8 @@ if($grab->login($url,$field)){
         'mDataProp_6'=>'ctsm',//时间冲突
         'mDataProp_7'=>'czOper',//操作
     );
-    $course_list=$grab->showCourse($url,$field);
+	$content=$grab->showCourse($url,$field);
+	$course_list=json_decode(trim($content,chr(239).chr(187).chr(191)),true);
 
     $cid=array();
     foreach($course_list['aaData'] as $index => $value){
@@ -53,8 +54,9 @@ if($grab->login($url,$field)){
     $choose=trim(fgets(STDIN));
     $arr_choose=explode(',',$choose);
 
-    $fp=fopen($username."Console.txt",'a+');
+    $fp=fopen($username."console.txt",'w+');
     $i=0;
+    $j=1;
     while(true){
         $msg="{$i} grabbing··· \r\n";
         fwrite($fp,$msg);
@@ -65,6 +67,10 @@ if($grab->login($url,$field)){
             fwrite($fp,$msg);
         }
         $i++;
+        if($i/1000>$j){
+        	fclose($fp);
+        	$fp=fopen($username."console.txt",'w+');
+        }
         usleep(50000);
     }
 }
