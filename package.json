@@ -1,0 +1,15 @@
+{
+  "name":"gwxk",
+  "author":"zjy",
+  "scripts":{
+    "start":"node test"
+  },
+  "dependencies":{
+    "http":"*",
+    "url":"*",
+    "querystring":"*",
+    "iconv-lite":"*"
+  },
+  "devDependencies":{
+  }
+}
