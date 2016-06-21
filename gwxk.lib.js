@@ -7,6 +7,8 @@ var fs=require('fs');
 var querystring=require('querystring');
 var urls=require('url');
 var iconvLite = require('iconv-lite');
+
+var cheerio = require("cheerio");
 function Gwxk(){
     _cookie=null;
     _username=null;
@@ -225,8 +227,8 @@ Gwxk.prototype={
             case 'index':
                 url='http://jxgl.gdufs.edu.cn/jsxsd/framework/main.jsp';
                 break;
-            case 'intoCourse':
-                url='http://jxgl.gdufs.edu.cn/jsxsd/xsxk/xsxk_index?jx0502zbid=C1C7822D144E484D8F4AD74A5717C881';
+            case 'xklist':
+                url='http://jxgl.gdufs.edu.cn/jsxsd/xsxk/xklc_list';
                 break;
             case 'xxk':
                 url='http://jxgl.gdufs.edu.cn/jsxsd/xsxkkc/xsxkXxxk';
@@ -238,7 +240,12 @@ Gwxk.prototype={
         return url;
     },
     intoCourse: function (cb) {
-        this.sendGet(this.getUrl('intoCourse'),cb);
+        var self = this;
+        this.sendGet(this.getUrl('xklist'), function (res, data) {
+            var $ = cheerio.load(data);
+            var href = $("#tbKxkc td a[target='blank']").attr('href');
+            self.sendGet('http://jxgl.gdufs.edu.cn' + href, cb);
+        });
     },
     showCourse: function (type, field, cb) {
         var self=this;

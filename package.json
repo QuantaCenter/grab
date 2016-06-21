@@ -1,15 +1,15 @@
 {
-  "name":"gwxk",
-  "author":"zjy",
-  "scripts":{
-    "start":"node test"
+  "name": "gwxk",
+  "author": "zjy",
+  "scripts": {
+    "start": "node test"
   },
-  "dependencies":{
-    "http":"*",
-    "url":"*",
-    "querystring":"*",
-    "iconv-lite":"*"
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "http": "*",
+    "iconv-lite": "*",
+    "querystring": "*",
+    "url": "*"
   },
-  "devDependencies":{
-  }
+  "devDependencies": {}
 }
