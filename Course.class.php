@@ -1,4 +1,4 @@
-<?php
+Ôªø<?php
 
 /**
  * Created by PhpStorm.
@@ -21,7 +21,7 @@ class Course {
     }
 
     /**
-     * ¥”∑µªÿµƒƒ⁄»›÷–Ã·»°≥ˆcookie
+     * ‰ªéËøîÂõûÁöÑÂÜÖÂÆπ‰∏≠ÊèêÂèñÂá∫cookie
      * @param String $responseHeader
      */
     public function parseHost($url){
@@ -32,7 +32,7 @@ class Course {
     }
 
     /**
-     * —È÷§µ«¬º,ªÒ»°µ«¬º◊¥Ã¨
+     * È™åËØÅÁôªÂΩï,Ëé∑ÂèñÁôªÂΩïÁä∂ÊÄÅ
      * @param String $url
      * @param Array $field
      */
@@ -82,7 +82,7 @@ class Course {
     }
 
     /**
-     * ∑µªÿµ«¬º∫ÛªÒ»°µƒ”√ªß√˚º∞—ß∫≈
+     * ËøîÂõûÁôªÂΩïÂêéËé∑ÂèñÁöÑÁî®Êà∑ÂêçÂèäÂ≠¶Âè∑
      */
     public function loginResult(){
         $res = Array();
@@ -92,7 +92,7 @@ class Course {
     }
 
     /**
-     * ∑µªÿøŒ≥Ã¡–±Ì
+     * ËøîÂõûËØæÁ®ãÂàóË°®
      * @param String $url
      */
     public function showCourse($url,$filed){
@@ -114,7 +114,24 @@ class Course {
 
     function intoCourse(){
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'http://jxgl.gdufs.edu.cn/jsxsd/xsxk/xsxk_index?jx0502zbid=425DF1EBE9644E6297C4D54B3EAD7A93');
+        //ËøõÂÖ•Â≠¶ÁîüÈÄâËØæ‰∏≠ÂøÉ
+        curl_setopt($ch, CURLOPT_URL, 'http://jxgl.gdufs.edu.cn/jsxsd/xsxk/xklc_list');
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $this->cookie);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        $content=curl_exec($ch);
+        curl_close($ch);
+
+        $pattern ='#<table id=\"tbKxkc\".+?>([\s\S]+?)</table>#';
+        preg_match($pattern,$content,$match);
+        $tr = $match[1];
+        $tr = str_replace(array("\n","\r","\n\r","\t"),"",$tr);
+        $pa1 = '#<td><a href=\"(.+?)\" target="blank">.*?</a></td>#';
+
+        preg_match($pa1,$tr,$match);
+        $into_url = $match[1];//ÂÖ•Âè£Âú∞ÂùÄ
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://jxgl.gdufs.edu.cn'.$into_url);
         curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
@@ -125,7 +142,7 @@ class Course {
     }
 
     /**
-     * Ã·Ωª±Ìµ•
+     * Êèê‰∫§Ë°®Âçï
      * @param String $url
      * @param Array $form
      */

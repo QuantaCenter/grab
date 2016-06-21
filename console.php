@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Created by PhpStorm.
  * User: zjy
@@ -6,7 +6,6 @@
  * Time: 15:05
  */
 include "Course.class.php";
-
 print("username: ");
 $username=trim(fgets(STDIN));
 print("password:");
@@ -63,8 +62,17 @@ if($grab->login($url,$field)){
         foreach($arr_choose as $in=>$va){
             $url = 'http://jxgl.gdufs.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id='.$cid[$va];
             $res = $grab->submitForm($url);
-            $msg=date("Y-m-d H:i:s")."\t ".$res."\r\n";
-            fwrite($fp,$msg);
+            $re=json_decode($res,true);
+            if($re['success']){
+            	$fp2=fopen("success.log","a+");
+            	$msg=date("Y-m-d H:i:s")."\t ".$username."\t 成功".$in."\n";
+            	fwrite($fp2, $msg);
+            	fclose($fp2);
+            }
+            else{
+            	$msg=date("Y-m-d H:i:s")."\t ".$re['message']."\n";
+            	fwrite($fp,$msg);
+            }
         }
         $i++;
         if($i/1000>$j){
